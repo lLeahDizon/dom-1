@@ -32,7 +32,7 @@ dom.on(test, "click", fn);
 dom.off(test, "click", fn);
 
 const testDiv = dom.find("#test")[0];
-console.log(testDiv);
+console.log("testDiv", testDiv);
 const test2 = dom.find("#test2")[0];
 console.log(dom.find(".red", test2)[0]);
 console.log(dom.parent(test));
@@ -42,4 +42,5 @@ console.log(dom.next(dom.find("#s2")[0]));
 console.log(dom.previous(dom.find("#s2")[0]));
 
 const t = dom.find("#travel")[0];
-console.log(dom.each(dom.children(t), (n) => dom.style(n, "color", "red")));
+dom.each(dom.children(t), (n) => dom.style(n, "color", "red"));
+console.log(dom.index(dom.find("#t1")[0]));

@@ -367,8 +367,28 @@ window.dom = {
    * @param {*} node
    * @param {*} fn
    */
-  each: function each(nodes, fn) {},
-  index: function index(node) {}
+  each: function each(nodeList, fn) {
+    for (var i = 0; i < nodeList.length; i++) {
+      fn.call(null, nodeList[i]);
+    }
+  },
+
+  /**
+   * 获取节点的索引
+   * @param {*} node
+   */
+  index: function index(node) {
+    var list = dom.children(node.parentNode);
+    var i;
+
+    for (i = 0; i < list.length; i++) {
+      if (list[i] === node) {
+        break;
+      }
+    }
+
+    return i;
+  }
 };
 },{}],"../../../../../AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];

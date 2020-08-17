@@ -219,6 +219,23 @@ window.dom = {
    * @param {*} node
    * @param {*} fn
    */
-  each(nodes, fn) {},
-  index(node) {},
+  each(nodeList, fn) {
+    for (let i = 0; i < nodeList.length; i++) {
+      fn.call(null, nodeList[i]);
+    }
+  },
+  /**
+   * 获取节点的索引
+   * @param {*} node
+   */
+  index(node) {
+    const list = dom.children(node.parentNode);
+    let i;
+    for (i = 0; i < list.length; i++) {
+      if (list[i] === node) {
+        break;
+      }
+    }
+    return i;
+  },
 };
