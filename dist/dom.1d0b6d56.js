@@ -119,12 +119,127 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   return newRequire;
 })({"dom.js":[function(require,module,exports) {
 window.dom = {
+  /**
+   * 创建一个新的节点
+   * @param {*} string 新的节点html内容
+   */
   create: function create(string) {
     var container = document.createElement("template");
     container.innerHTML = string.trim();
     return container.content.firstChild;
   },
-  after: function after(node, node2) {}
+
+  /**
+   * 新增一个弟弟节点
+   * @param {*} node
+   * @param {*} node2
+   */
+  after: function after(node, node2) {
+    node.parentNode.insertBefore(node2, node.nextSibling);
+  },
+
+  /**
+   * 新增一个哥哥节点
+   * @param {*} node
+   * @param {*} node2
+   */
+  before: function before(node, node2) {
+    node.parentNode.insertBefore(node2, node);
+  },
+
+  /**
+   * 新增一个子节点
+   * @param {*} parent
+   * @param {*} node
+   */
+  append: function append(parent, node) {
+    parent.appendChild(node);
+  },
+
+  /**
+   * 新增一个父节点
+   * @param {*} node
+   * @param {*} parent
+   */
+  wrap: function wrap(node, parent) {
+    dom.before(node, parent);
+    dom.append(parent, node);
+  },
+
+  /**
+   * 删除节点
+   * @param {*} node
+   */
+  remove: function remove(node) {
+    node.parentNode.removeChild(node);
+    return node;
+  },
+
+  /**
+   * 删除后代
+   * @param {*} node
+   */
+  empty: function empty(node) {
+    var array = [];
+    var x = node.firstChild;
+
+    while (x) {
+      array.push(dom.remove(node.firstChild));
+      x = node.firstChild;
+    }
+
+    return array;
+  },
+
+  /**
+   * 读写属性
+   * @param {*} node
+   * @param {*} name
+   * @param {*} value
+   */
+  attr: function attr(node, name, value) {
+    //重载
+    if (arguments.length === 3) {
+      node.setAttribute(name, value);
+    } else if (arguments.length === 2) {
+      return node.getAttribute(name);
+    }
+  },
+
+  /**
+   * 读写文本内容
+   * @param {*} node
+   * @param {*} string
+   */
+  text: function text(node, string) {
+    //适配不同浏览器
+    if (arguments.length === 2) {
+      if ("innerText" in node) {
+        node.innerText = string; // ie
+      } else {
+        node.textContent = string; // firefox/chrome
+      }
+    } else if (arguments.length === 1) {
+      if ("innerText" in node) {
+        return node.innerText;
+      } else {
+        return node.textContent;
+      }
+    }
+  },
+
+  /**
+   * 读写HTML内容
+   * @param {*} node
+   * @param {*} string
+   */
+  html: function html(node, string) {
+    if (arguments.length === 2) {
+      node.innerHTML = string;
+    } else if (arguments.length === 1) {
+      return node.innerHTML;
+    }
+  }
 };
 },{}],"../../../../../AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -154,7 +269,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "5802" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "3661" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
