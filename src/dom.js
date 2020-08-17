@@ -109,4 +109,116 @@ window.dom = {
       return node.innerHTML;
     }
   },
+  /**
+   * 修改style
+   * @param {*} node
+   * @param {*} name
+   * @param {*} value
+   */
+  style(node, name, value) {
+    if (arguments.length === 3) {
+      // dom.style(div, 'border', '1px solid red')
+      node.style[name] = value;
+    } else if (arguments.length === 2) {
+      if (typeof name === "String") {
+        // dom.style(div, 'color')
+        return node.style[name];
+      } else if (name instanceof Object) {
+        // dom.style(div, {color: 'red'})
+        for (const key in name) {
+          node.style[key] = name[key];
+        }
+      }
+    }
+  },
+  /**
+   * 修改class
+   */
+  class: {
+    add(node, className) {
+      node.classList.add(className);
+    },
+    remove(node, className) {
+      node.classList.remove(className);
+    },
+    has(node, className) {
+      return node.classList.contains(className);
+    },
+  },
+  /**
+   * 添加事件监听
+   * @param {*} node
+   * @param {*} eventName
+   * @param {*} fn
+   */
+  on(node, eventName, fn) {
+    node.addEventListener(eventName, fn);
+  },
+  /**
+   * 移出事件监听
+   * @param {*} node
+   * @param {*} eventName
+   * @param {*} fn
+   */
+  off(node, eventName, fn) {
+    node.removeEventListener(eventName, fn);
+  },
+  /**
+   * 获取标签
+   * @param {*} selector
+   * @param {*} scope
+   */
+  find(selector, scope) {
+    return (scope || document).querySelectorAll(selector);
+  },
+  /**
+   * 获取父元素
+   * @param {*} node
+   */
+  parent(node) {
+    return node.parentNode;
+  },
+  /**
+   * 获取子元素
+   * @param {*} node
+   */
+  children(node) {
+    return node.children;
+  },
+  /**
+   * 获取兄弟元素
+   * @param {*} node
+   */
+  siblings(node) {
+    return Array.from(node.parentNode.children).filter((n) => n !== node);
+  },
+  /**
+   * 获取弟弟元素
+   * @param {*} node
+   */
+  next(node) {
+    let x = node.nextSibling;
+    while (x.nodeType === 3) {
+      x = x.nextSibling;
+    }
+    return x;
+  },
+  /**
+   * 获取哥哥元素
+   * @param {*} node
+   */
+  previous(node) {
+    let x = node.previousSibling;
+    while (x.nodeType === 3) {
+      x = x.previousSibling;
+    }
+    return x;
+  },
+  /**
+   * 遍历所有节点
+   * @param {*} node
+   * @param {*} fn
+   */
+  each(nodes, fn) {},
+  index(node) {},
 };

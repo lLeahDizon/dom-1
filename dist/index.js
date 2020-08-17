@@ -117,49 +117,74 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"main.js":[function(require,module,exports) {
-var div = dom.create("<div>newDiv</div>");
-console.log(div);
-dom.after(test, div);
-var div3 = dom.create('<div id="parent"></div>');
-dom.wrap(test, div3);
-var nodes = dom.empty(window.empty);
-console.log(nodes);
-dom.attr(test, "title", "Hi, I am Lemon");
-var title = dom.attr(test, "title");
-console.log("title: ".concat(title));
-dom.text(test, "这是新的内容");
-dom.text(test);
-dom.style(test, {
-  border: "1px solid red",
-  color: "blue"
-});
-dom.style(test, "border");
-dom.style(test, "border", "1px solid blue");
-dom.class.add(test, "red");
-dom.class.add(test, "blue");
-dom.class.remove(test, "blue");
-console.log(dom.class.has(test, "blue"));
+})({"../../../../../AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
 
-var fn = function fn() {
-  console.log("点击了");
-};
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
 
-dom.on(test, "click", fn);
-dom.off(test, "click", fn);
-var testDiv = dom.find("#test")[0];
-console.log(testDiv);
-var test2 = dom.find("#test2")[0];
-console.log(dom.find(".red", test2)[0]);
-console.log(dom.parent(test));
-console.log(dom.siblings(dom.find("#s2")[0]));
-console.log(dom.next(dom.find("#s2")[0]));
-console.log(dom.previous(dom.find("#s2")[0]));
-var t = dom.find("#travel")[0];
-console.log(dom.each(dom.children(t), function (n) {
-  return dom.style(n, "color", "red");
-}));
-},{}],"../../../../../AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../../../../../AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"../../../../../AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/bundle-url.js"}],"../../../../../AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -363,5 +388,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../../AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js","main.js"], null)
-//# sourceMappingURL=/main.1f19ae8e.js.map
+},{}]},{},["../../../../../AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/index.js.map
